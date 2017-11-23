@@ -2,7 +2,7 @@
 ## Preface - The Problem
 Trying to parse something (e.g. a XML-String) in a webworker, one quickly realizes that [DOMParser](https://developer.mozilla.org/en-US/docs/Web/API/DOMParser) is not available, since `window` is missing. I needed an equivalent output to `window.DOMParser` in my webworker tool chain. Therefore I could not use some custom parsing library which would produce some custom object unusable in the further chain.
 
-After some research I came across [xmldom](https://github.com/jindw/xmldom). It promises a W3C standard compatible API and output. But sady it is a node module and can not simply be used, since `require()` is not available in a webworker.
+After some research I came across [xmldom](https://github.com/jindw/xmldom). It promises a W3C standard compatible API and output. But sadly it is a node module and can not simply be used, since `require()` is not available in a webworker.
 
 Enter [browserify](http://browserify.org/). It allows to turn the node module into code that would run in a client browser. This is a little documentation for myself on how to get xmldom running in webworker.
 
