@@ -49,7 +49,7 @@ self.addEventListener('message', function(e) {
   }, false);
 ```
 
-I ignore the fact that this code would not run in a webworker because it contains a `require()`. Browserify will transform it later to code that runs in the webworker.
+I ignore the fact that this code would not run in a browser/webworker because it contains a `require()`. Browserify will transform it later to code that runs in the webworker.
 
 ### Setup and run browserify
 
