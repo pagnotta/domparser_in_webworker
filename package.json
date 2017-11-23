@@ -1,0 +1,16 @@
+{
+  "name": "bfitest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify worker.js -o ./build/worker_bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^14.5.0",
+    "xmldom": "^0.1.27"
+  }
+}
