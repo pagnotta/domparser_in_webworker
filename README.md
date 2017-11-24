@@ -26,29 +26,14 @@ Create a basic webpage including your webworker. I chose...
     * `app.js` is being included here
 * `app.js`
     * here the worker is created
-* `domparser.js`
-    * here we `require()` the `xmldom` library
-    * this file will be "_browserified_" later on
 * `worker.js`
     * contains the code to be executed in the webworker
     * loads the "_browserified_" version of `domparser.js`
+* `domparser.js`
+    * here we `require()` the `xmldom` library
+    * this file will be "_browserified_" later on
 
-Inside `domparser.js` it is necessary to export the `DOMParser` variable, because otherwise browserify can not produce a standalone version of the file:
-
-```javascript
-// create DOMParser variable from xmldom
-var DOMParser = require('xmldom').DOMParser;
-
-// necessary to create a standalone browserify version
-module.exports = {
-    DOMParser: DOMParser
-}
-
-```
-
-I ignore the fact that this code would not run in a browser/webworker because it contains a `require()`. Browserify will transform it later to code that runs in the webworker.
-
-In `worker.js` the (not yet existent) "_browserified_" version of `domparser.js` is imported. For testing if the DOMParser works, I use the example code from the [xmldom GitHub page](https://github.com/jindw/xmldom#example):
+In `worker.js` the (not yet existent) "_browserified_" version of `domparser.js` is imported. For testing if the DOMParser works, I use the example code from the [xmldom GitHub page](https://github.com/jindw/xmldom#example) inside the event listener:
 
 ```javascript
 // import the bundled xmldom.DOMParser
@@ -69,7 +54,22 @@ self.addEventListener('message', function(e) {
   }, false);
 ```
 
-### Setup and run browserify
+Inside `domparser.js` the `xmldom` library which was installed with npm is `require()`ed. It is necessary to export the `DOMParser` variable, because otherwise browserify can not produce a standalone version of the file:
+
+```javascript
+// create DOMParser variable from xmldom
+var DOMParser = require('xmldom').DOMParser;
+
+// necessary to create a standalone browserify version
+module.exports = {
+    DOMParser: DOMParser
+}
+
+```
+
+I ignore the fact that this code would not run in a browser/webworker because it contains a `require()`. Browserify will transform it later into standalone code that runs in the webworker.
+
+### Setup browserify
 
 Next Browserify needs to be configured to transform the `domparser.js` code, by adding the following to `package.json`:
 
@@ -86,13 +86,15 @@ Next Browserify needs to be configured to transform the `domparser.js` code, by 
 }
 ```
 
-The parameter `--s` is for [--standalone](https://github.com/browserify/browserify#usage). Then running
+The parameter `--s` is for [--standalone](https://github.com/browserify/browserify#usage). The `xmldom` parameter will be the name of the variable under which the exported `DOMParser` variable will be available (as `xmldom.DOMParser`).
+
+Then running
 
 `npm run build`
 
 will execute browserify an let it do it's magic :)
 
-Voilà! There is the `./build/domparser_bundle.js` file which we import into the webworker using `importScript()`. This now contains code that can run inside a webworker.
+Voilà! There is the `./build/domparser_bundle.js` file which we import into the webworker using `importScript()`. Browserify has pulled all the necessary code from the `xmldom` library into `./build/domparser_bundle.js`. This code can now be used to replace the missing `window.DOMParser` inside the webworker. Mission accomplished.
 
 ### Run the example
 
