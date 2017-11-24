@@ -48,7 +48,7 @@ module.exports = {
 
 I ignore the fact that this code would not run in a browser/webworker because it contains a `require()`. Browserify will transform it later to code that runs in the webworker.
 
-Then in `worker.js` the "_browserified_" version of `domparser.js` is imported. For testing if the DOMParser works, I use the example code from the [xmldom GitHub page](https://github.com/jindw/xmldom#example):
+In `worker.js` the (not yet existent) "_browserified_" version of `domparser.js` is imported. For testing if the DOMParser works, I use the example code from the [xmldom GitHub page](https://github.com/jindw/xmldom#example):
 
 ```javascript
 // import the bundled xmldom.DOMParser
@@ -71,7 +71,7 @@ self.addEventListener('message', function(e) {
 
 ### Setup and run browserify
 
-Next Browserify needs to be configured to transform the `worker.js` code, by adding the following to `package.json`:
+Next Browserify needs to be configured to transform the `domparser.js` code, by adding the following to `package.json`:
 
 ```json
 {
@@ -86,7 +86,7 @@ Next Browserify needs to be configured to transform the `worker.js` code, by add
 }
 ```
 
-Then running
+The parameter `--s` is for [--standalone](https://github.com/browserify/browserify#usage). Then running
 
 `npm run build`
 
