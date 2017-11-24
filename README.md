@@ -26,15 +26,35 @@ Create a basic webpage including your webworker. I chose...
     * `app.js` is being included here
 * `app.js`
     * here the worker is created
-        * using the not yet existent file `./build/worker_bundle.js`
+* `domparser.js`
+    * here we `require()` the `xmldom` library
+    * this file will be "_browserified_" later on
 * `worker.js`
     * contains the code to be executed in the webworker
+    * loads the "_browserified_" version of `domparser.js`
 
-For the code in `worker.js` I use the example from the [xmldom GitHub page](https://github.com/jindw/xmldom#example):
+Inside `domparser.js` it is necessary to export the `DOMParser` variable, because otherwise browserify can not produce a standalone version of the file:
 
 ```javascript
-// create DOMParser from xmldom
+// create DOMParser variable from xmldom
 var DOMParser = require('xmldom').DOMParser;
+
+// necessary to create a standalone browserify version
+module.exports = {
+    DOMParser: DOMParser
+}
+
+```
+
+I ignore the fact that this code would not run in a browser/webworker because it contains a `require()`. Browserify will transform it later to code that runs in the webworker.
+
+Then in `worker.js` the "_browserified_" version of `domparser.js` is imported. For testing if the DOMParser works, I use the example code from the [xmldom GitHub page](https://github.com/jindw/xmldom#example):
+
+```javascript
+// import the bundled xmldom.DOMParser
+importScripts('./build/domparser_bundle.js');
+
+var DOMParser = xmldom.DOMParser;
 
 // add event listener to webworker
 self.addEventListener('message', function(e) {
@@ -49,8 +69,6 @@ self.addEventListener('message', function(e) {
   }, false);
 ```
 
-I ignore the fact that this code would not run in a browser/webworker because it contains a `require()`. Browserify will transform it later to code that runs in the webworker.
-
 ### Setup and run browserify
 
 Next Browserify needs to be configured to transform the `worker.js` code, by adding the following to `package.json`:
@@ -61,7 +79,7 @@ Next Browserify needs to be configured to transform the `worker.js` code, by add
 
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify worker.js -o ./build/worker_bundle.js"
+    "build": "browserify domparser.js --s xmldom > ./build/domparser_bundle.js"
   },
 
   ...

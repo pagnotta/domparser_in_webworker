@@ -1,5 +1,5 @@
 // create the webworker
-var worker = new Worker('./build/worker_bundle.js');
+var worker = new Worker('./worker.js');
 
 // add event listener to handle webworker response
 worker.addEventListener('message', function(e) {

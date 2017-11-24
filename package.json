@@ -1,11 +1,11 @@
 {
-  "name": "bfitest",
+  "name": "domparser_in_webworker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify worker.js -o ./build/worker_bundle.js"
+    "build": "browserify domparser.js --s xmldom > ./build/domparser_bundle.js"
   },
   "author": "",
   "license": "ISC",
