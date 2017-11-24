@@ -92,7 +92,7 @@ The parameter `--s` is for [--standalone](https://github.com/browserify/browseri
 
 will execute browserify an let it do it's magic :)
 
-Voilà! There is the `./build/worker_bundle.js` file which we use to create the webworker in `app.js`. This now contains code that can run inside a webworker.
+Voilà! There is the `./build/domparser_bundle.js` file which we import into the webworker using `importScript()`. This now contains code that can run inside a webworker.
 
 ### Run the example
 
