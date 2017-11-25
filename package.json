@@ -1,0 +1,16 @@
+{
+  "name": "domparser_in_webworker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify domparser.js --s xmldom > ./build/domparser_bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^14.5.0",
+    "xmldom": "^0.1.27"
+  }
+}
