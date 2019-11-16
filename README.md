@@ -39,8 +39,6 @@ In `worker.js` the (not yet existent) "_browserified_" version of `domparser.js`
 // import the bundled xmldom.DOMParser
 importScripts('./build/domparser_bundle.js');
 
-var DOMParser = xmldom.DOMParser;
-
 // add event listener to webworker
 self.addEventListener('message', function(e) {
     // example taken from https://github.com/jindw/xmldom
@@ -86,7 +84,7 @@ Next Browserify needs to be configured to transform the `domparser.js` code, by 
 }
 ```
 
-The parameter `--s` is for [--standalone](https://github.com/browserify/browserify#usage). The `xmldom` parameter is the name of the variable under which the exported `DOMParser` variable will be available (as `xmldom.DOMParser`).
+The parameter `--s` is for [--standalone](https://github.com/browserify/browserify#usage). The `DOMParser` parameter is the name of the variable under which the exported `DOMParser` variable will be available (as `OMParser` globally).
 
 Then running
 
