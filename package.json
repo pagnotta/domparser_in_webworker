@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify domparser.js --s xmldom > ./build/domparser_bundle.js"
+    "build": "browserify domparser.js --s DOMParser > ./build/domparser_bundle.js"
   },
   "author": "",
   "license": "ISC",

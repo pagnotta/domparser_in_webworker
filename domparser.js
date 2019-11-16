@@ -2,6 +2,4 @@
 var DOMParser = require('xmldom').DOMParser;
 
 // necessary to create a standalone browserify version
-module.exports = {
-    DOMParser: DOMParser
-}
+module.exports = DOMParser;

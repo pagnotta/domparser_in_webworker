@@ -1,8 +1,6 @@
 // import the bundled xmldom.DOMParser
 importScripts('./build/domparser_bundle.js');
 
-var DOMParser = xmldom.DOMParser;
-
 // add event listener to webworker
 self.addEventListener('message', function(e) {
     // example taken from https://github.com/jindw/xmldom
